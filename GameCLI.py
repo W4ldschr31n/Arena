@@ -8,7 +8,9 @@ def main():
 	orc = Character('Foul orc')
 	troll = Character('Fetid troll')
 	arena = Arena()
-	fight = FightManager(arena, [troll, player], player)
+	fight = FightManager(arena, [player, orc, troll], player)
+
+	print('You enter the arena.')
 	
 	wageFight(fight)
 
@@ -16,16 +18,15 @@ def main():
 
 	if fight.hasPlayer():
 		print('You survived another fight.')
-		#Loot
+		#Loot and continue
+		lootCorpses(player, corpses)
 	elif len(fight.arena.fighters)>0:
 		winner = fight.arena.fighters.pop(0)
 		print('%s won the fight !'%winner.name)
 	else:
 		print('Draw ! All fighters lost their lives, the crowd cheers to revive the most brutal.')
 		#Continue if fought best
-	if(player.isAlive()):
-		lootCorpses(player, corpses)
-
+		
 	print(player)
 	print(player.belt)
 		
@@ -39,7 +40,10 @@ def lootCorpses(player, corpses):
 		action = int(input())
 	except:
 		action = -1
-	corpseChoice = player.loot(corpses[action-1]) if action>0 and action<=len(corpses) else -1
+	corpseChoice = corpses[action-1].items if action>0 and action<=len(corpses) else -1
+	if corpseChoice == -1:
+		print("You don't loot.")
+		return 1
 	for i, l in enumerate(corpseChoice):
 		print('%d to loot %s'%(i+1, l))
 	try:
@@ -48,6 +52,10 @@ def lootCorpses(player, corpses):
 		action = -1
 	if action>0 and action<=len(corpseChoice):
 		player.pickup(corpseChoice[action-1])
+	else:
+		print("You don't loot")
+		return 1
+	return 0
 
 def wageFight(fight):
 	player = fight.player
@@ -66,32 +74,61 @@ def wageFight(fight):
 
 def playerTurn(player, fight):
 	fighters = fight.arena.fighters
+	endTurn = 0
+
+	def default():
+		print('You scratch your head')
+		return 0
 	
 	def actionAttack():
-		pass
-	def actionItem():
-		pass
-	switchAction ={1:actionAttack, 2:actionItem}
-	
-
-	action = -1
-	while(action not in switchAction):
+		print('Choose someone to attack')
+		for i, f in enumerate(fighters):
+			print('%d to attack %s'%(i+1, f.name))
 		try:
-			action = int(input('1 to attack\n2 to use item'))
+			action = int(input())
 		except:
-			print('Please enter a valid action')
-	for i, f in enumerate(fighters):
-		print('%d to attack %s'%(i+1, f.name))
-	try:
-		action = int(input())
-	except:
+			action = -1
+		target = fighters[action-1] if action>0 and action<=len(fighters) else player
+		if target is not player:
+			player.attack(target)
+			print('You attack %s !'%target.name)
+		else:
+			print('You scratch your head.')
+		return 1
+			
+	def actionItem():
+		belt = player.belt
+		if len(belt)==0:
+			print('No items in belt')
+			return 0
+		print('Choose an item to use')
+		for i, item in enumerate(belt):
+			print('%d to use %s : %s'%(i+1, item, item.desc()))
+		try:
+			action = int(input())
+		except:
+			action = -1
+		if action>0 and action<=len(belt):
+			item = belt[action-1]
+			print('You use %s !'%item)
+			player.use(belt[action-1], player)
+		else:
+			print('You scratch your head.')
+		for f in fight.arena.fighters:
+			print(f)
+		return 0
+		
+	switchAction ={1:actionAttack, 2:actionItem}
+
+	while(endTurn==0):
 		action = -1
-	target = fighters[action-1] if action>0 and action<=len(fighters) else player
-	if target is not player:
-		player.attack(target)
-		print('You attack %s !'%target.name)
-	else:
-		print('You scratch your head.')
+		while(action not in switchAction):
+			try:
+				action = int(input('1 to attack\n2 to use an item\n'))
+			except:
+				print('Please enter a valid action')
+			#Play the action
+			endTurn = switchAction.get(action, default)()
 		
 if __name__ == '__main__':
     main()

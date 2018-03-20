@@ -2,7 +2,7 @@ from Item import HealingPotion
 
 class Character():
 
-	def __init__(self, name, hp=10, strength=5, toughness=1, belt = [HealingPotion()], armor=None, weapon=None):
+	def __init__(self, name, hp=10, strength=5, toughness=1, belt = None, armor=None, weapon=None):
 		self.name = name
 		self.maxHp = hp
 		self.hp = hp
@@ -10,8 +10,10 @@ class Character():
 		self.toughness = toughness
 		self.armor = armor
 		self.weapon = weapon
-		self.belt = belt
-
+		if belt is None:
+			self.belt = [HealingPotion()]
+		else:
+			self.belt = belt
 
 	def attack(self, other):
 		dmg = self.strength
@@ -40,12 +42,10 @@ class Character():
 
 	def use(self, item, target):
 		item.use(target)
+		self.belt.remove(item)
 
 	def isAlive(self):
 		return self.hp > 0 
-
-	def loot(self, corpse):
-		return corpse.items
 
 	def __str__(self):
 		return self.name + (' is alive with %s HP'%self.hp if self.isAlive() else ' is dead ')\
