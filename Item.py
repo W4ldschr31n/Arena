@@ -27,6 +27,7 @@ class HealingPotion(Consumable):
 	def use(self, character):
 		assert character.isAlive(), 'Cannot heal a dead charater !'
 		character.hp = min(character.hp+self.heal, character.maxHp)
+		return 1
 
 	def __str__(self):
 		return 'Healing potion (%s)'%self.quality

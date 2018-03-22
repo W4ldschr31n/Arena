@@ -15,17 +15,18 @@ class Character():
 		else:
 			self.belt = belt
 
-	def attack(self, other):
+	def attack(self):
+		#Fist attack
 		dmg = self.strength
 		if self.weapon:
 			dmg = dmg + self.weapon.getDamages()
-		other.takeDamages(dmg)
+		return dmg
 
-	def takeDamages(self, dmg):
+	def protect(self, dmg):
 		if self.armor:
 			dmg = self.armor.protect(dmg)
 		dmg = dmg - self.toughness
-		self.hp = self.hp - dmg
+		return dmg
 
 	def pickup(self, item):
 		def default():

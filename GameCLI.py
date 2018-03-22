@@ -1,7 +1,11 @@
 from FightManager import FightManager
+from CharacterController import CharacterController
 from Character import Character
 from Arena import Arena
 import time
+import sys
+
+charController = CharacterController()
 
 def main():
 	player = Character(input('What is your name, slave?\n'), 15)
@@ -90,7 +94,7 @@ def playerTurn(player, fight):
 			action = -1
 		target = fighters[action-1] if action>0 and action<=len(fighters) else player
 		if target is not player:
-			player.attack(target)
+			charController.makeAttack(player,target)
 			print('You attack %s !'%target.name)
 		else:
 			print('You scratch your head.')
@@ -111,7 +115,7 @@ def playerTurn(player, fight):
 		if action>0 and action<=len(belt):
 			item = belt[action-1]
 			print('You use %s !'%item)
-			player.use(belt[action-1], player)
+			charController.makeUse(player, belt[action-1], player)
 		else:
 			print('You scratch your head.')
 		for f in fight.arena.fighters:
@@ -125,6 +129,9 @@ def playerTurn(player, fight):
 		while(action not in switchAction):
 			try:
 				action = int(input('1 to attack\n2 to use an item\n'))
+			except KeyboardInterrupt:
+				print('Exiting...')
+				sys.exit()
 			except:
 				print('Please enter a valid action')
 			#Play the action

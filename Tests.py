@@ -1,4 +1,5 @@
 from FightManager import FightManager
+from CharacterController import CharacterController
 from Character import Character
 from Corpse import Corpse
 import unittest
@@ -8,14 +9,7 @@ from Item import HealingPotion
 class CharacterTest(unittest.TestCase):
 
 	def setUp(self):
-		self.dummy = Character('Dummy', 100, 10, 0, [])
-
-	def testTakeDamages(self):
-		self.dummy.takeDamages(25)
-		self.assertEqual(self.dummy.hp, 75)
-		self.dummy.toughness = 10
-		self.dummy.takeDamages(25)
-		self.assertEqual(self.dummy.hp, 60)
+		self.dummy = Character('Dummy', 100, 10, 5, [])
 
 	def testIsAlive(self):
 		self.assertTrue(self.dummy.isAlive())
@@ -23,19 +17,37 @@ class CharacterTest(unittest.TestCase):
 		self.assertFalse(self.dummy.isAlive())
 
 	def testAttack(self):
-		dummy2 = Character('Dummy2', 10, 0, 0)
-		self.dummy.attack(dummy2)
-		self.assertFalse(dummy2.isAlive())
+		self.assertEqual(self.dummy.attack(), 10)
+
+	def testProtect(self):
+		self.assertEqual(self.dummy.protect(10), 5)
 
 	def testPickUp(self):
 		potion = HealingPotion()
 		self.dummy.pickup(potion)
 		self.assertIn(potion, self.dummy.belt)
 
+class CharacterControllerTest(unittest.TestCase):
+
+	def setUp(self):
+		self.charController = CharacterController()
+		self.dummy = Character('Dummy', 100, 10, 0, [HealingPotion()])
+		self.dummy2 = Character('Dummy', 5, 0, 5)
+
+	def testMakeAttack(self):
+		self.charController.makeAttack(self.dummy, self.dummy2)
+		self.assertFalse(self.dummy2.isAlive())
+
+	def testMakeUse(self):
+		self.dummy2.hp = 1
+		self.charController.makeUse(self.dummy, self.dummy.belt[0], self.dummy2)
+		self.assertEqual(self.dummy2.hp, self.dummy2.maxHp)
+		self.assertFalse(self.dummy.belt)
+
 class CorpseTest(unittest.TestCase):
 
 	def setUp(self):
-		self.dummy = Character('dummy', 0, 0, [HealingPotion()])
+		self.dummy = Character('dummy', 1, 0, 0, [HealingPotion()])
 		self.corpse = Corpse(self.dummy)
 
 	def testCreationBelt(self):
@@ -57,13 +69,14 @@ class HealingPotionTest(unittest.TestCase):
 		self.assertEqual(self.potion.heal, HealingPotion.healParams['greater'])
 
 	def testUse(self):
-		dummy = Character('dummy', 20, 15, 0, [HealingPotion('normal')])
-		dummy.attack(dummy)
-		dummy.use(dummy.belt[0], dummy)
+		dummy = Character('dummy', 20, 0, 0, [HealingPotion('normal')])
+		dummy.hp = 5
+		charController = CharacterController()
+		charController.makeUse(dummy, dummy.belt[0], dummy)
 		self.assertEqual(dummy.hp, 15)
 		self.assertFalse(dummy.belt)
 		dummy.pickup(self.potion)
-		dummy.use(dummy.belt[0], dummy)
+		charController.makeUse(dummy, dummy.belt[0], dummy)
 		self.assertEqual(dummy.hp, 20)
 
 class ArenaTest(unittest.TestCase):

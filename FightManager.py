@@ -1,10 +1,12 @@
 import random
+from CharacterController import CharacterController
 
 class FightManager():
-	def __init__(self, arena, fighters, player=None):
+	def __init__(self, arena, fighters, player=None, charController = CharacterController()):
 		self.arena = arena
 		self.arena.startFight(fighters)
 		self.player = player
+		self.charController = charController
 
 	def isOver(self):
 		return len(self.arena.fighters)<=1
@@ -20,7 +22,7 @@ class FightManager():
 				pass
 				print('%s scratches his head.'%f.name)
 			else:
-				f.attack(target)
+				self.charController.makeAttack(f, target)
 				print('%s attacks %s !'%(f.name, target.name))
 			
 	def update(self):
