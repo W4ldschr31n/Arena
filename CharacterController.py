@@ -9,8 +9,8 @@ class CharacterController():
 		target.hp -= dmg
 
 	def makeUse(self, character, item, target):
-		assert item in character.belt, "You don't have that item"
+		assert item in character.inventory.items, "%s has no %s."%(character.name, item)
 		isDepleted = item.use(target)
 		if isDepleted:
-			character.belt.remove(item)
+			character.inventory.removeItem(item)
 		

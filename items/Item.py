@@ -35,8 +35,3 @@ class HealingPotion(Consumable):
 	def desc(self):
 		return 'Heals for %d HP.'%self.heal
 
-class Weapon(Item):
-	pass
-
-class Armor(Item):
-	pass

@@ -1,7 +1,8 @@
 class Corpse():
+
 	def __init__(self, character):
-		self.items = [character.weapon, character.armor]
-		self.items.extend(character.belt)
+		self.items = [character.equipment.weapon, character.equipment.armor]
+		self.items.extend(character.inventory.items)
 		self.items = list(filter(lambda x:x is not None, self.items))
 		self.name = character.name
 

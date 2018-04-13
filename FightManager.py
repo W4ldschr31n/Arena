@@ -2,6 +2,7 @@ import random
 from CharacterController import CharacterController
 
 class FightManager():
+
 	def __init__(self, arena, fighters, player=None, charController = CharacterController()):
 		self.arena = arena
 		self.arena.startFight(fighters)
