@@ -2,12 +2,12 @@ from FightManager import FightManager
 from CharacterController import CharacterController
 from Character import Character
 from Corpse import Corpse
-import unittest
 from Arena import Arena
 from items.Item import HealingPotion
 from items.Weapon import Weapon
 from items.Armor import Armor
 from Inventory import Inventory
+import unittest
 
 class CharacterTest(unittest.TestCase):
 
