@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/W4ldschr31n/Arena.svg?branch=master)](https://travis-ci.org/W4ldschr31n/Arena)
 # Arena
 ## Requirements
   * Python 3.6
