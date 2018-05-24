@@ -1,5 +1,7 @@
 import random, pygame, sys
 from pygame.locals import *
+from .Coliseum import Coliseum
+from .FightManager import FightManager
 
 FPS = 30
 WINDOWWIDTH = 640
@@ -15,8 +17,8 @@ def main():
 	pygame.display.set_caption('Arena')
 	DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 
-	ARENA = Arena()
-	FIGHTMANAGER = FightManager()
+	COLISEUM = Coliseum()
+	FIGHTMANAGER = FightManager(COLISEUM, [])
 	while True: #Main game loop
 		DISPLAYSURF.fill(BGCOLOR)
 

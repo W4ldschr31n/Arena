@@ -1,12 +1,12 @@
-from FightManager import FightManager
-from CharacterController import CharacterController
-from Character import Character
-from Corpse import Corpse
-from Arena import Arena
-from items.Item import HealingPotion
-from items.Weapon import Weapon
-from items.Armor import Armor
-from Inventory import Inventory
+from .FightManager import FightManager
+from .CharacterController import CharacterController
+from .Character import Character
+from .Corpse import Corpse
+from .Coliseum import Coliseum
+from .items.Item import HealingPotion
+from .items.Weapon import Weapon
+from .items.Armor import Armor
+from .Inventory import Inventory
 import unittest
 
 class CharacterTest(unittest.TestCase):
@@ -87,28 +87,28 @@ class HealingPotionTest(unittest.TestCase):
 		charController.makeUse(dummy, dummy.inventory.items[0], dummy)
 		self.assertEqual(dummy.hp, 20)
 
-class ArenaTest(unittest.TestCase):
+class ColiseumTest(unittest.TestCase):
 
 	def setUp(self):
 		self.dummy = Character('Dummy')
 		self.dummy2 = Character('Dummy2')
-		self.arena = Arena()
+		self.coliseum = Coliseum()
 		self.fighters = [self.dummy, self.dummy2]
 
 	def testUpdateFighters(self):
-		self.arena.startFight(self.fighters)
-		self.assertEqual(len(self.arena.fighters), len(self.fighters))
+		self.coliseum.startFight(self.fighters)
+		self.assertEqual(len(self.coliseum.fighters), len(self.fighters))
 		self.dummy.hp = 0
-		self.arena.updateFighters()
-		self.assertEqual(len(self.arena.fighters), 1)
-		self.assertEqual(len(self.arena.corpses), 1)
+		self.coliseum.updateFighters()
+		self.assertEqual(len(self.coliseum.fighters), 1)
+		self.assertEqual(len(self.coliseum.corpses), 1)
 
 	def testClean(self):
-		self.arena.startFight(self.fighters)
+		self.coliseum.startFight(self.fighters)
 		self.dummy.hp = 0
-		self.arena.updateFighters()
-		self.arena.clean()
-		self.assertFalse(self.arena.fighters)
-		self.assertFalse(self.arena.corpses)
+		self.coliseum.updateFighters()
+		self.coliseum.clean()
+		self.assertFalse(self.coliseum.fighters)
+		self.assertFalse(self.coliseum.corpses)
 
 		

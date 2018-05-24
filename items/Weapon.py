@@ -1,4 +1,4 @@
-from items.Item import Item
+from .Item import Item
 
 class Weapon(Item):
 

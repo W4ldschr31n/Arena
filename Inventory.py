@@ -1,4 +1,4 @@
-from items.Item import HealingPotion
+from .items.Item import HealingPotion
 
 class Inventory():
 

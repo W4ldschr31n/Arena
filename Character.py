@@ -1,6 +1,6 @@
-from items.Item import HealingPotion
-from Inventory import Inventory
-from Equipment import Equipment
+from .items.Item import HealingPotion
+from .Inventory import Inventory
+from .Equipment import Equipment
 
 class Character():
 

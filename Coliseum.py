@@ -1,6 +1,6 @@
-from Corpse import Corpse
+from .Corpse import Corpse
 
-class Arena():
+class Coliseum():
 	def __init__(self):
 		self.fighters = []
 		self.corpses = []

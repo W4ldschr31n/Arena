@@ -1,10 +1,10 @@
-from FightManager import FightManager
-from CharacterController import CharacterController
-from Character import Character
-from Equipment import Equipment
-from items.Weapon import Weapon
-from items.Armor import Armor
-from Arena import Arena
+from .FightManager import FightManager
+from .CharacterController import CharacterController
+from .Character import Character
+from .Equipment import Equipment
+from .items.Weapon import Weapon
+from .items.Armor import Armor
+from .Coliseum import Coliseum
 import time
 import sys
 
@@ -25,22 +25,22 @@ def main():
 	orc = Character('Foul orc')
 	troll = Character('Fetid troll')
 	knight = Character('Knight', 10, 5, 1, None, Equipment(Weapon('Sword','1hsw',2), Armor('Shiny armor', 1)))
-	arena = Arena()
-	fight = FightManager(arena, [player, orc, troll, knight], player)
+	coliseum = Coliseum()
+	fight = FightManager(coliseum, [player, orc, troll, knight], player)
 
 	print('You enter the arena.')
 	print(knight.equipment.weapon)
 	
 	wageFight(fight)
 
-	corpses = fight.arena.corpses
+	corpses = fight.coliseum.corpses
 
 	if fight.hasPlayer():
 		print('You survived another fight.')
 		#Loot and continue
 		lootCorpses(player, corpses)
-	elif len(fight.arena.fighters)>0:
-		winner = fight.arena.fighters.pop(0)
+	elif len(fight.coliseum.fighters)>0:
+		winner = fight.coliseum.fighters.pop(0)
 		print('%s won the fight !'%winner.name)
 	else:
 		print('Draw ! All fighters lost their lives, the crowd cheers to revive the most brutal.')
@@ -74,7 +74,7 @@ def wageFight(fight):
 	player = fight.player
 	while not fight.isOver():
 		print("="*60)
-		for f in fight.arena.fighters:
+		for f in fight.coliseum.fighters:
 			print(f)
 		print("="*30)		
 		#Player turn
@@ -87,7 +87,7 @@ def wageFight(fight):
 		fight.update()
 
 def playerTurn(player, fight):
-	fighters = fight.arena.fighters
+	fighters = fight.coliseum.fighters
 	endTurn = 0
 
 	def default():
@@ -125,8 +125,8 @@ def playerTurn(player, fight):
 			print('You use %s !'%item)
 			charController.makeUse(player, items[action-1], player)
 		else:
-			print('You scratch your head.')
-		for f in fight.arena.fighters:
+			print('You decide not to use any item.')
+		for f in fight.coliseum.fighters:
 			print(f)
 		return 0
 		
@@ -137,7 +137,7 @@ def playerTurn(player, fight):
 		while(action not in switchAction):
 			action = readAction('1 to attack\n2 to use an item\n')
 			if action<0:
-				for f in fight.arena.fighters:
+				for f in fight.coliseum.fighters:
 					print(f)
 		
 			#Play the action
