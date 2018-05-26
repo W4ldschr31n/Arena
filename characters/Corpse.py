@@ -7,5 +7,5 @@ class Corpse():
 		self.name = character.name
 
 	def __str__(self):
-		return '%s (corpse): '%self.name + ','.join(map(lambda x:str(x), self.items)) if len(self.items) else 'Empty corpse'
+		return '%s (corpse): '%self.name + ','.join([str(i) for i in self.items]) if len(self.items) else 'Empty corpse'
 

@@ -76,7 +76,7 @@ def wageFight(fight):
 		print("="*60)
 		for f in fight.coliseum.fighters:
 			print(f)
-		print("="*30)		
+		print("="*30)
 		#Player turn
 		if fight.hasPlayer():
 			playerTurn(player, fight)

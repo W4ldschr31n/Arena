@@ -25,6 +25,6 @@ class FightController():
 			else:
 				self.charController.makeAttack(f, target)
 				print('%s attacks %s !'%(f.name, target.name))
-			
+
 	def update(self):
 		self.coliseum.updateFighters()

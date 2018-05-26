@@ -2,7 +2,6 @@ class Service():
 	def __init__(self, service_name=''):
 		pass
 
-
 class Shop():
 	#TO DO
 	def __init__(self, category, description, products):
@@ -22,7 +21,7 @@ class Shop():
 			Service('craft_weapon'),]
 		def alchemist():
 			return [Service('shop')]
-			
+
 		switch = {
 			'inn':inn,
 			'smith':smith,

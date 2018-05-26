@@ -13,4 +13,3 @@ class CharacterController():
 		isDepleted = item.use(target)
 		if isDepleted:
 			character.inventory.removeItem(item)
-		

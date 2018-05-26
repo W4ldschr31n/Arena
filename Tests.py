@@ -110,5 +110,3 @@ class ColiseumTest(unittest.TestCase):
 		self.coliseum.clean()
 		self.assertFalse(self.coliseum.fighters)
 		self.assertFalse(self.coliseum.corpses)
-
-		
