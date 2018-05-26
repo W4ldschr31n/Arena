@@ -1,7 +1,7 @@
 import random
-from .CharacterController import CharacterController
+from Arena.controllers.CharacterController import CharacterController
 
-class FightManager():
+class FightController():
 
 	def __init__(self, coliseum, fighters, player=None, charController = CharacterController()):
 		self.coliseum = coliseum

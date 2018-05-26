@@ -1,4 +1,4 @@
-from .Corpse import Corpse
+from Arena.characters.Corpse import Corpse
 
 class Coliseum():
 	def __init__(self):

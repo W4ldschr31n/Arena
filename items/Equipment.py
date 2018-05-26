@@ -1,5 +1,5 @@
-from .items.Weapon import Weapon
-from .items.Armor import Armor
+from Arena.items.Weapon import Weapon
+from Arena.items.Armor import Armor
 
 class Equipment():
 

@@ -1,9 +1,9 @@
-from .Item import Item
+from Arena.items.Item import Item
 
 class Armor(Item):
 
-	def __init__(self, name ='Rags', defence=0):
-		self.name = name
+	def __init__(self, category ='Rags', defence=0):
+		self.category = category
 		self.defence = defence
 
 	def protect(self, dmg):
@@ -11,6 +11,6 @@ class Armor(Item):
 		return dmg
 
 	def __str__(self):
-		return self.name
+		return self.category
 
 

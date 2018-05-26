@@ -1,10 +1,10 @@
-from .FightManager import FightManager
-from .CharacterController import CharacterController
-from .Character import Character
-from .Equipment import Equipment
-from .items.Weapon import Weapon
-from .items.Armor import Armor
-from .Coliseum import Coliseum
+from Arena.controllers.FightController import FightController
+from Arena.controllers.CharacterController import CharacterController
+from Arena.characters.Character import Character
+from Arena.items.Equipment import Equipment
+from Arena.items.Weapon import Weapon
+from Arena.items.Armor import Armor
+from Arena.environments.Coliseum import Coliseum
 import time
 import sys
 
@@ -24,9 +24,9 @@ def main():
 	player = Character(input('What is your name, slave?\n'), 15)
 	orc = Character('Foul orc')
 	troll = Character('Fetid troll')
-	knight = Character('Knight', 10, 5, 1, None, Equipment(Weapon('Sword','1hsw',2), Armor('Shiny armor', 1)))
+	knight = Character('Knight', 10, 5, 1, None, Equipment(Weapon('Sword',2), Armor('Shiny armor', 1)))
 	coliseum = Coliseum()
-	fight = FightManager(coliseum, [player, orc, troll, knight], player)
+	fight = FightController(coliseum, [player, orc, troll, knight], player)
 
 	print('You enter the arena.')
 	print(knight.equipment.weapon)

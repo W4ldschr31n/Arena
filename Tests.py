@@ -1,12 +1,12 @@
-from .FightManager import FightManager
-from .CharacterController import CharacterController
-from .Character import Character
-from .Corpse import Corpse
-from .Coliseum import Coliseum
-from .items.Item import HealingPotion
-from .items.Weapon import Weapon
-from .items.Armor import Armor
-from .Inventory import Inventory
+from Arena.controllers.FightController import FightController
+from Arena.controllers.CharacterController import CharacterController
+from Arena.characters.Character import Character
+from Arena.characters.Corpse import Corpse
+from Arena.environments.Coliseum import Coliseum
+from Arena.items.Item import HealingPotion
+from Arena.items.Weapon import Weapon
+from Arena.items.Armor import Armor
+from Arena.items.Inventory import Inventory
 import unittest
 
 class CharacterTest(unittest.TestCase):
@@ -31,7 +31,7 @@ class CharacterTest(unittest.TestCase):
 		self.assertIn(potion, self.dummy.inventory.items)
 
 	def testPickUpWeapon(self):
-		sword = Weapon('Sword', '1hsw', 2)
+		sword = Weapon('Sword', 2)
 		self.dummy.pickup(sword)
 		self.assertEqual(self.dummy.equipment.weapon, sword)
 
